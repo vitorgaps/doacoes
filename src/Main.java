@@ -28,45 +28,7 @@ public class Main {
         menuInicial();
     }
 
-    public final static void limpaTela()
-    {
-        for (int i=0;i<10;i++)
-            System.out.println();
-    }
-
-    public static void menuInicial(){
-        limpaTela();
-        int opcao = 0;
-        do{
-            imprimeNomeTela("Menu inicial");
-            System.out.println("Boas vindas! Você gostaria de:");
-            System.out.println("1 - Logar no sistema");
-            System.out.println("2 - Criar novo usuário Pessoa física");
-            System.out.println("3 - Criar novo usuário Pessoa jurídica");
-            System.out.println("4 - Sair");
-            opcao = leitor.nextInt();
-            leitor.nextLine();
-
-            switch (opcao) {
-                case 1:
-                    logar();
-                    break;
-                case 2:
-                    criarUsuarioPessoaFisica();
-                    break;
-                case 3:
-                    criarUsuarioPessoaJuridica();
-                    break;
-                case 4:
-                    break;
-                default:
-                    messageErrorDefault();
-            }
-        }while (opcao!=4);
-    }
-
     public static void logar(){
-        limpaTela();
         imprimeNomeTela("Menu de Login");
 
         String email = receberEntradaTextoUsuario("Digite o email: ");
@@ -85,61 +47,70 @@ public class Main {
         }
     }
 
-    public static void criarUsuarioAdm(){
-        limpaTela();
-        imprimeNomeTela("Menu de cadastro: administrador");
-
-        String nome = receberEntradaTextoUsuario("Digite seu nome: ");
-        String email = receberEntradaTextoUsuario("Digite seu email: ");
-        String password = receberEntradaTextoUsuario("Digite sua senha: ");
-
-        gestaoUsuarios.cadastrarAdminstrador(email,nome,password);
-        imprimeMensagemAlerta("Cadastro realizado com sucesso!");
+    public static void menuInicial(){
+        int opcao = 0;
+        ArrayList<String> opcoes = new ArrayList<>(){{
+            add("Logar no sistema");
+            add("Criar novo usuário Pessoa física");
+            add("Criar novo usuário Pessoa jurídica");
+            add("Sair");
+        }};
+        do{
+            imprimeNomeTela("Menu inicial");
+            System.out.println("Boas vindas! Você gostaria de:");
+            opcao = receberEscolhaUsuario(opcoes);
+            if(opcao == 1){
+                logar();
+            }
+            else if(opcao == 2){
+                criarUsuarioPessoaFisica();
+            }
+            else if(opcao == 3){
+                criarUsuarioPessoaJuridica();
+            }
+        }while (opcao!=4);
     }
 
-    public static void criarUsuarioPessoaFisica(){
-        limpaTela();
-        imprimeNomeTela("Menu de cadastro: pessoa física");
-
-        String nome = receberEntradaTextoUsuario("Digite seu nome: ");
-        String email = receberEntradaTextoUsuario("Digite sua email: ");
-        String cpf = receberEntradaTextoUsuario("Digite seu cpf: ");
-        String password = receberEntradaTextoUsuario("Digite sua senha: ");
-
-        gestaoUsuarios.cadastrarPessoaFisica(email,nome,password,cpf);
-        imprimeMensagemAlerta("Cadastro realizado com sucesso!");
-    }
-
-    public static void criarUsuarioPessoaJuridica(){
-        limpaTela();
-        imprimeNomeTela("Menu de cadastro: pessoa jurídica");
-
-        String nome = receberEntradaTextoUsuario("Digite seu nome: ");
-        String cnpj = receberEntradaTextoUsuario("Digite seu cnpj: ");
-        String email = receberEntradaTextoUsuario("Digite sua email: ");
-        String password = receberEntradaTextoUsuario("Digite sua senha: ");
-
-        gestaoUsuarios.cadastrarPessoaJuridica(email,nome,password,cnpj);
-        imprimeMensagemAlerta("Cadastro realizado com sucesso!");
-    }
-
-    public static void messageErrorDefault (){
-        imprimeMensagemAlerta("Opção não encontrada!");
+    public static void menuUsuario(Usuario usuario){
+        imprimeNomeTela("Menu de usuário");
+        ArrayList opcoes = new ArrayList<String>(){{
+            add("Cadastrar Item para Doação");
+            add("Pesquisar Itens de Doação");
+            add("Visualizar Interessados em Doação");
+            add("Sair");
+        }};
+        int opcao = 0;
+        do{
+            System.out.println("Olá " + usuario.getNome() + ". Você gostaria de:");
+            opcao = receberEscolhaUsuario(opcoes);
+            if(opcao == 1){
+                cadastrarItemDoacao();
+            }
+            else if(opcao == 2){
+                pesquisaItensDoacao(usuario);
+            }
+            else if(opcao == 3){
+                visualizarInteressadosDoacao(usuario);
+            }
+            else if(opcao == 4) {
+                deslogar(usuario);
+            }
+        }while (opcao!=opcoes.size());
     }
 
     public static void menuAdministrador(Usuario usuario){
-        limpaTela();
         imprimeNomeTela("Menu de administrador");
+        ArrayList<String> opcoes = new ArrayList<>(){{
+            add("Visualizar novos itens cadastrados");
+            add("Criar administrador");
+            add("Adicionar nova categoria de doação");
+            add("Remover uma categoria existente");
+            add("Sair");
+        }};
         int opcao = 0;
         do{
             System.out.println("Olá " + usuario.getNome() + ". Você gostaria de: ");
-            System.out.println("1 - Visualizar novos itens cadastrados");
-            System.out.println("2 - Criar administrador");
-            System.out.println("3 - Adicionar nova categoria de doação");
-            System.out.println("4 - Remover uma categoria existente");
-            System.out.println("5 - Sair");
-            opcao = leitor.nextInt();
-            leitor.nextLine();
+            opcao = receberEscolhaUsuario(opcoes);
 
             if(opcao == 1){
                 visualizarItensCadastrados();
@@ -159,37 +130,65 @@ public class Main {
         } while (opcao != 5);
     }
 
+    public static void criarUsuarioAdm(){
+        imprimeNomeTela("Menu de cadastro: administrador");
+
+        String nome = receberEntradaTextoUsuario("Digite seu nome: ");
+        String email = receberEntradaTextoUsuario("Digite seu email: ");
+        String password = receberEntradaTextoUsuario("Digite sua senha: ");
+
+        gestaoUsuarios.cadastrarAdminstrador(email,nome,password);
+        imprimeMensagemAlerta("Cadastro realizado com sucesso!");
+    }
+
+    public static void criarUsuarioPessoaFisica(){
+        
+        imprimeNomeTela("Menu de cadastro: pessoa física");
+
+        String nome = receberEntradaTextoUsuario("Digite seu nome: ");
+        String email = receberEntradaTextoUsuario("Digite sua email: ");
+        String cpf = receberEntradaTextoUsuario("Digite seu cpf: ");
+        String password = receberEntradaTextoUsuario("Digite sua senha: ");
+
+        gestaoUsuarios.cadastrarPessoaFisica(email,nome,password,cpf);
+        imprimeMensagemAlerta("Cadastro realizado com sucesso!");
+    }
+
+    public static void criarUsuarioPessoaJuridica(){
+        imprimeNomeTela("Menu de cadastro: pessoa jurídica");
+
+        String nome = receberEntradaTextoUsuario("Digite seu nome: ");
+        String cnpj = receberEntradaTextoUsuario("Digite seu cnpj: ");
+        String email = receberEntradaTextoUsuario("Digite sua email: ");
+        String password = receberEntradaTextoUsuario("Digite sua senha: ");
+
+        gestaoUsuarios.cadastrarPessoaJuridica(email,nome,password,cnpj);
+        imprimeMensagemAlerta("Cadastro realizado com sucesso!");
+    }
+
     private static void removerTipo() {
-        limpaTela();
         imprimeNomeTela("Gerenciamento de categorias de doações: excluir");
         ArrayList<String> categoriasExistentes;
         int opcao = 0;
         do{
             System.out.println("Categorias existentes: ");
             categoriasExistentes = tipoItem.getListaTipos();
-            for(int i = 0; i<categoriasExistentes.size(); i++){
-                System.out.println((i)+" - "+categoriasExistentes.get(i));
-            }
-            System.out.println("Selecione a categoria que deseja excluir ou '"+categoriasExistentes.size()+"' para sair");
-            opcao = leitor.nextInt();
-            leitor.nextLine();
-            if(opcao < 0 || opcao > categoriasExistentes.size()){
-                System.out.println("Opção não encontrada");
-            }
+            ArrayList<String> opcoes = new ArrayList<>(categoriasExistentes);
+            opcoes.add("'Sair'");
 
-            else if(opcao==categoriasExistentes.size()){
-                break;
-            }
-            else{
-                String categoriaExcluida = categoriasExistentes.get(opcao);
+            opcao = receberEscolhaUsuario(
+                    opcoes,
+                    "Selecione a categoria que deseja excluir ou '" + opcoes.size() +"' para sair");
+
+            if (opcao != opcoes.size()){
+                String categoriaExcluida = categoriasExistentes.get(opcao-1);
                 tipoItem.excluirTipo(categoriaExcluida);
                 imprimeMensagemAlerta("Categoria '" + categoriaExcluida + "' excluída com sucesso!");
             }
-        } while(opcao < 0 || opcao > categoriasExistentes.size());
+        } while(opcao != categoriasExistentes.size()+1);
     }
 
     private static void adicionarNovoTipo() {
-        limpaTela();
         imprimeNomeTela("Gerenciamento de categorias de doações: criar");
         ArrayList<String> categoriasExistentes;
         String categoria;
@@ -197,15 +196,12 @@ public class Main {
             System.out.println("Categorias existentes: ");
             categoriasExistentes = tipoItem.getListaTipos();
             for(int i = 0; i<categoriasExistentes.size(); i++){
-                System.out.println((i)+" - "+categoriasExistentes.get(i));
+                System.out.println((i) + " - " + categoriasExistentes.get(i));
             }
             System.out.println("Digite o nome da categoria que deseja adicionar ou '1' para retornar a tela anterior");
             categoria = leitor.nextLine();
 
-            if(categoria.equals("1")){
-                break;
-            }
-            else{
+            if(!categoria.equals("1")){
                 tipoItem.inserirTipo(categoria);
                 imprimeMensagemAlerta("Categoria '" + categoria + "' inserida com sucesso!");
             }
@@ -213,7 +209,6 @@ public class Main {
     }
 
     private static void visualizarItensCadastrados() {
-        limpaTela();
         imprimeNomeTela("Menu de itens cadastrados");
         ArrayList<ItemDoacao> novosItens = gestaoDoacoes.retornarListaNovosItens();
         int itemSelecionado = 0;
@@ -227,11 +222,11 @@ public class Main {
                     System.out.println("Tipo: " + item.getTipo());
                     System.out.println("Quantidade: " + item.getQuantidade());
                 }
-                System.out.println("Selecione um item ou digite '"+(novosItens.size()+1)+"' para sair:");
+                System.out.println("Selecione um item ou digite '" + (novosItens.size()+1) + "' para sair:");
                 itemSelecionado = leitor.nextInt();
                 leitor.nextLine();
 
-                if(itemSelecionado==novosItens.size()+1){
+                if(itemSelecionado == novosItens.size()+1){
                     break;
                 }
                 if(itemSelecionado > 0 && itemSelecionado <= novosItens.size()){
@@ -278,44 +273,7 @@ public class Main {
         }
     }
 
-    private static void deslogar(Usuario usuario) {
-        gestaoDeAcessos.logout(usuario);
-    }
-
-    public static void menuUsuario(Usuario usuario){
-        limpaTela();
-        imprimeNomeTela("Menu de usuário");
-        int opcao = 0;
-        do{
-            System.out.println("Olá " + usuario.getNome() + ". Você gostaria de:");
-            System.out.println("1 - Cadastrar Item para Doação");
-            System.out.println("2 - Pesquisar Itens de Doação");
-            System.out.println("3 - Visualizar Interessados em Doação");
-            System.out.println("4 - Sair");
-
-            opcao = leitor.nextInt();
-            leitor.nextLine();
-            switch (opcao) {
-                case 1:
-                    cadastrarItemDoacao();
-                    break;
-                case 2:
-                    pesquisaItensDoacao(usuario);
-                    break;
-                case 3:
-                    visualizarInteressadosDoacao(usuario);
-                    break;
-                case 4:
-                    deslogar(usuario);
-                    break;
-                default:
-                    messageErrorDefault();
-            }
-        }while (opcao!=4);
-    }
-
     public static void cadastrarItemDoacao(){
-        limpaTela();
         imprimeNomeTela("Menu de cadastro: novo item");
 
         int tipoItemValor = 0;
@@ -349,13 +307,12 @@ public class Main {
 
         boolean sucesso = gestaoDoacoes.cadastrarItemDoacao(tipoItemEscolhido,desc,qtd,idUsuario,foto,cidade);
 
-        if (sucesso == true){
+        if (sucesso){
             imprimeMensagemAlerta("Item cadastrado com sucesso !");
         }
     }
 
     public static void pesquisaItensDoacao(Usuario usuario){
-        limpaTela();
         imprimeNomeTela("Menu de pesquisa: itens de doação");
         int opcao = 0;
         ArrayList<ItemDoacao> doacoes;
@@ -406,7 +363,6 @@ public class Main {
     }
 
     public static void visualizarInteressadosDoacao(Usuario usuario){
-        limpaTela();
         imprimeNomeTela("Menu de interesses: lista de interessados");
         ArrayList<InteresseDoacao> interesses;
         int opcao = 0;
@@ -454,6 +410,14 @@ public class Main {
         }while(opcao!=interesses.size());
     }
 
+    private static void deslogar(Usuario usuario) {
+        gestaoDeAcessos.logout(usuario);
+    }
+
+    public static void messageErrorDefault (){
+        imprimeMensagemAlerta("Opção não encontrada!");
+    }
+
     public final static void imprimeMensagemAlerta(String mensagem){
         System.out.printf("\n\n* " + mensagem + " *\n\n");
     }
@@ -467,4 +431,37 @@ public class Main {
         String valorLido = leitor.nextLine();
         return valorLido;
     }
+
+    public static int receberEscolhaUsuario(ArrayList<String> opcoes, String mensagemDeLeitura){
+        int opcao = 0;
+        do{
+            for(int i=0;i<opcoes.size();i++){
+                System.out.println((i+1) + " - " + opcoes.get(i));
+            }
+            System.out.println(mensagemDeLeitura);
+            opcao = leitor.nextInt();
+            leitor.nextLine();
+
+            if(opcao <= 0 || opcao > opcoes.size()){
+                imprimeMensagemAlerta("Opção não encontrada, tente novamente!");
+            }
+        } while(opcao <= 0 || opcao > opcoes.size());
+        return opcao;
+    };
+
+    public static int receberEscolhaUsuario(ArrayList<String> opcoes){
+        int opcao = 0;
+        do{
+            for(int i=0;i<opcoes.size();i++){
+                System.out.println((i+1) + " - " + opcoes.get(i));
+            }
+            opcao = leitor.nextInt();
+            leitor.nextLine();
+
+            if(opcao <= 0 || opcao > opcoes.size()){
+                imprimeMensagemAlerta("Opção não encontrada, tente novamente!");
+            }
+        } while(opcao <= 0 || opcao > opcoes.size());
+        return opcao;
+    };
 }
