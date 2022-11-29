@@ -14,7 +14,7 @@ public class GestaoDeUsuarios implements IGestaoDeUsuarios {
     }
 
     private void seed(){
-        Administrador adm = new Administrador("adm123","adm@mail.com","ademir");
+        Administrador adm = new Administrador("adm123","adm@mail.com","Ademir");
         PessoaFisica vitor = new PessoaFisica("vitor123","vitor@mail.com", NivelAcesso.usuario,"Vitor Santos","12345678910");
         PessoaFisica andrei = new PessoaFisica("andrei123","andrei@mail.com", NivelAcesso.usuario,"Andrei Magalhães","12345678910");
         PessoaFisica pedro = new PessoaFisica("pedro123","pedro@mail.com", NivelAcesso.usuario,"Pedro Elias","12345678910");

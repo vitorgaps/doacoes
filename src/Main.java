@@ -48,6 +48,9 @@ public class Main {
     }
 
     public static void menuInicial(){
+        System.out.println("\n\n!Existe um usuário administrador para testes cadastrado com as credenciais:\n" +
+                "e-mail: adm@mail.com\n" +
+                "password: adm123\n");
         int opcao = 0;
         ArrayList<String> opcoes = new ArrayList<>(){{
             add("Logar no sistema");
@@ -205,7 +208,7 @@ public class Main {
                 tipoItem.inserirTipo(categoria);
                 imprimeMensagemAlerta("Categoria '" + categoria + "' inserida com sucesso!");
             }
-        } while(categoria.equals("1"));
+        } while(!categoria.equals("1"));
     }
 
     private static void visualizarItensCadastrados() {
