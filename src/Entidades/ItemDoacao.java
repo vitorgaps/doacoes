@@ -1,3 +1,7 @@
+package Entidades;
+
+import Interfaces.IItemDoacao;
+
 import java.util.*;
 
 public class ItemDoacao implements IItemDoacao {

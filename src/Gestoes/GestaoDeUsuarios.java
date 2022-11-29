@@ -1,3 +1,8 @@
+package Gestoes;
+
+import Entidades.*;
+import Interfaces.IGestaoDeUsuarios;
+
 import java.util.ArrayList;
 
 public class GestaoDeUsuarios implements IGestaoDeUsuarios {
@@ -10,9 +15,13 @@ public class GestaoDeUsuarios implements IGestaoDeUsuarios {
 
     private void seed(){
         Administrador adm = new Administrador("adm123","adm@mail.com","ademir");
-        PessoaFisica vitor = new PessoaFisica("vitor123","vitor@mail.com",NivelAcesso.usuario,"Vitor Santos","12345678910");
+        PessoaFisica vitor = new PessoaFisica("vitor123","vitor@mail.com", NivelAcesso.usuario,"Vitor Santos","12345678910");
+        PessoaFisica andrei = new PessoaFisica("andrei123","andrei@mail.com", NivelAcesso.usuario,"Andrei Magalhães","12345678910");
+        PessoaFisica pedro = new PessoaFisica("pedro123","pedro@mail.com", NivelAcesso.usuario,"Pedro Elias","12345678910");
         listaUsuario.add(adm);
         listaUsuario.add(vitor);
+        listaUsuario.add(andrei);
+        listaUsuario.add(pedro);
     }
 
     @Override

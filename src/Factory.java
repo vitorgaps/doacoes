@@ -1,3 +1,6 @@
+import Gestoes.*;
+import Interfaces.IGestaoDeUsuarios;
+
 public class Factory {
 
     public static GestaoDeDoacoes getGestaoDeDoacoes(int limiteDoacoes, int limiteCadastro){
@@ -16,8 +19,8 @@ public class Factory {
         return new GestaoDeAcessos(gestaoDeUsuarios);
     }
 
-    public TipoItem getTipoItem(){
-        return new TipoItem();
+    public static GestaoMensagens getGestaoDeMensagens(){
+        return new GestaoMensagens();
     }
 
 }

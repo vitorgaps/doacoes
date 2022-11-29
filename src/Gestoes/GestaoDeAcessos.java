@@ -1,5 +1,10 @@
+package Gestoes;
+
+import Entidades.Usuario;
+import Interfaces.IGestaoDeAcessos;
+import Interfaces.IGestaoDeUsuarios;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class GestaoDeAcessos implements IGestaoDeAcessos {
     private IGestaoDeUsuarios gestaoDeUsuarios;

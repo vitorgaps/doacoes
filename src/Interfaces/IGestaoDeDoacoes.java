@@ -1,3 +1,8 @@
+package Interfaces;
+
+import Entidades.ItemDoacao;
+import Entidades.StatusItemDoacao;
+
 import java.util.ArrayList;
 
 public interface IGestaoDeDoacoes {

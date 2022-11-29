@@ -1,3 +1,7 @@
+package Interfaces;
+
+import Entidades.Usuario;
+
 import java.util.ArrayList;
 
 public interface IGestaoDeUsuarios {

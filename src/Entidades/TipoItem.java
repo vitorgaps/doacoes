@@ -1,3 +1,7 @@
+package Entidades;
+
+import Interfaces.ITipoItem;
+
 import java.util.ArrayList;
 
 public class TipoItem implements ITipoItem {

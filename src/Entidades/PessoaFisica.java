@@ -1,3 +1,5 @@
+package Entidades;
+
 public class PessoaFisica extends Usuario {
     private String cpf = "";
 

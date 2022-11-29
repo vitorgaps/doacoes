@@ -1,3 +1,8 @@
+package Entidades;
+
+import Entidades.NivelAcesso;
+import Entidades.Usuario;
+
 public class Administrador extends Usuario {
 
     public Administrador(String senha, String email, String nome) {

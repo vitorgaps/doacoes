@@ -1,3 +1,5 @@
+package Entidades;
+
 public class PessoaJuridica extends Usuario{
     private String cnpj = "";
 

@@ -1,3 +1,9 @@
+package Gestoes;
+
+import Entidades.ItemDoacao;
+import Entidades.StatusItemDoacao;
+import Interfaces.IGestaoDeDoacoes;
+
 import java.util.ArrayList;
 
 public class GestaoDeDoacoes implements IGestaoDeDoacoes {
@@ -41,7 +47,7 @@ public class GestaoDeDoacoes implements IGestaoDeDoacoes {
             return false;
         }
         else{
-            ItemDoacao item = new ItemDoacao(tipo,desc,qtd,idUsuario,fotos,cidade,StatusItemDoacao.aguardandoAprovacao);
+            ItemDoacao item = new ItemDoacao(tipo,desc,qtd,idUsuario,fotos,cidade, StatusItemDoacao.aguardandoAprovacao);
             listaDoacoes.add(item);
             return true;
         }
@@ -59,13 +65,13 @@ public class GestaoDeDoacoes implements IGestaoDeDoacoes {
 
     @Override
     public ArrayList<ItemDoacao> pesquisaItemDoacao(String descricao){
-        ArrayList itensEncorntados = new ArrayList<ItemDoacao>();
+        ArrayList itensEncontrados = new ArrayList<ItemDoacao>();
         listaDoacoes.forEach((item)->{
-            if(item.getDescricao().contains(descricao)){
-                itensEncorntados.add(item);
+            if(item.getDescricao().toLowerCase().contains(descricao.toLowerCase()) && item.getStatus()==StatusItemDoacao.aprovado){
+                itensEncontrados.add(item);
             }
         });
-        return itensEncorntados;
+        return itensEncontrados;
     }
 
     @Override
