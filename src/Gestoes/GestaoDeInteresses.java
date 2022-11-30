@@ -11,7 +11,6 @@ import java.util.ArrayList;
 public class GestaoDeInteresses implements IGestaoDeInteresses {
     private ArrayList<InteresseDoacao> listaInteresses = new ArrayList<>();
 
-
     @Override
     public void demontrarInteresseDoacao(String justificativa, ItemDoacao item, Usuario usuario, int quantidade){
         InteresseDoacao newInteresseDoacao = new InteresseDoacao(usuario,justificativa, item, quantidade);
@@ -48,9 +47,9 @@ public class GestaoDeInteresses implements IGestaoDeInteresses {
         }
         else{
             item.getItem().setQuantidade(item.getItem().getQuantidade()-item.getQuantidade());
+            listaInteresses.remove(item);
             if(item.getItem().getQuantidade()==0){
                 item.getItem().setStatus(StatusItemDoacao.doado);
-                listaInteresses.remove(item);
             }
             return true;
         }

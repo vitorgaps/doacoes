@@ -76,7 +76,7 @@ public class Main {
 
     public static void menuUsuario(Usuario usuario){
         imprimeNomeTela("Menu de usuário");
-        ArrayList opcoes = new ArrayList<String>(){{
+        ArrayList<String> opcoes = new ArrayList<>(){{
             add("Cadastrar Item para Doação");
             add("Pesquisar Itens de Doação");
             add("Visualizar Interessados em Doação");
@@ -405,6 +405,7 @@ public class Main {
                             boolean sucesso = gestaoDeInteresses.aprovarInteresse(item);
                             if(sucesso){
                                 gestaoDeMensagens.enviaEmailAprovacaoDoacao(item.getUsuarioInteressado().getEmail(),item);
+                                break;
                             }
                         }
                     } while(valor!=1 && valor != 2);
@@ -430,8 +431,12 @@ public class Main {
     }
 
     public static String receberEntradaTextoUsuario(String mensagem){
-        System.out.println(mensagem);
-        String valorLido = leitor.nextLine();
+        String valorLido = "";
+        do{
+            System.out.println(mensagem);
+            valorLido = leitor.nextLine();
+        } while(valorLido.isEmpty());
+
         return valorLido;
     }
 
